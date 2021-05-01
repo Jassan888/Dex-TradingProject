@@ -14,7 +14,7 @@ contract Dex{
 
     }
 
-    function sell()external{
+    function sell(string calldata _sticker, uint _amount, uint _price)external{
 
     }
 }
