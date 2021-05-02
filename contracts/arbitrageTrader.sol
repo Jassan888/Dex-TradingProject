@@ -1,6 +1,9 @@
 pragma solidity ^0.5.8;
 pragma experimental ABIEncoderV2;
 
+import 'browser/Dex.sol';
+import 'browser/Oralce.sol';
+
 contract ArbitrageTrader{
 
     address public admin;
@@ -33,6 +36,10 @@ contract ArbitrageTrader{
         if(aset.dex != address(0),"Asset does not exist.");
 
         bytes32 datakey= keccak256(abi.encodePacked(_sticker, _date));
+        Oracle oracleContract= Oracle(oracle);
+       Oracle.Result memory result= oracleContract.getData(datakey);
+       require(result.exist == true, "This result does not exist, can not trade.");
+       require(result.approvedBy.length == 10, 'Not enough appoval for trade.');
     }
 
     function 
